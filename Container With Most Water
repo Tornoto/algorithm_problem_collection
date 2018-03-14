@@ -7,3 +7,42 @@ Given n non-negative integers a1, a2, ..., an, where each represents a point at 
 Note: You may not slant the container and n is at least 2.
 
 */
+/*
+任意两个直线构成一个容器，求最大的容器
+*/
+// while循环地方写的好蠢--#
+// 两个指针移动
+
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        if(height.size()==2)
+            return min(height[0], height[1]);
+        int i = 0, j = height.size()-1;
+        int start = i, end = j-1;
+        int vol = min(height[i],height[j])*j;
+        for(;i<j;){
+            if(height[i]>height[j])
+            {    while(height[j-1]<=height[j])
+                    j--;
+                j--;
+            }
+            else{
+                while(height[i+1]<=height[i])
+                    i++;
+                i++;
+            }
+            int vol2 = min(height[i],height[j])*(j-i);
+            if(vol2 > vol){
+                start = i;
+                end = j;
+                vol = vol2;
+            }    
+        }
+        return vol;
+        
+    }
+    int min(int a, int b){
+        return a<b?a:b;
+    }
+};
